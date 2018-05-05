@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item-->
+        <!--android:id="@+id/Home_Page"-->
+        <!--android:title="Home Page" />-->
+    <item
+        android:id="@+id/accountSetting"
+        android:title="User Account" />
+    <item
+        android:id="@+id/all_users"
+        android:title="All Users" />
+    <!--<item-->
+        <!--android:id="@+id/changePass"-->
+        <!--android:title="Change Password" />-->
+    <!--<item-->
+        <!--android:id="@+id/delete_account"-->
+        <!--android:title="Delete Account" />-->
+    <item
+        android:id="@+id/logout"
+        android:title="Log Out" />
+
+    <item
+        android:id="@+id/navigation"
+        android:title="navigation" />
+    <item
+        android:id="@+id/app_bar_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Search"
+        app:actionViewClass="android.widget.SearchView" />
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_action_action_search"
+        android:orderInCategory="100"
+        android:title="@string/abc_search_hint"
+        app:showAsAction="always" />
+
+
+</menu>

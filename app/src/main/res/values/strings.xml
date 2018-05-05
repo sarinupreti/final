@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Guff</string>
+    <string name="log_out">Log out</string>
+    <string name="item1">Item1</string>
+    <string name="redwan">sarin</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_status">Hi there, i\'m using chat app</string>
+    <string name="permission_request_denied">denied</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="name"> John Doe</string>
+
+
+    <string name="phoneNumber">+977-9813011051</string>
+    <string name="message_adapter_no_google_maps">This device does not have google maps</string>
+    <string name="no_maps">this device has no google maps</string>
+</resources>

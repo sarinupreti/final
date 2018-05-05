@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "689317994221",
+    "firebase_url": "https://sarin-62a3b.firebaseio.com",
+    "project_id": "sarin-62a3b",
+    "storage_bucket": "sarin-62a3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689317994221:android:e81f00b8a1fb2e92",
+        "android_client_info": {
+          "package_name": "com.example.sarin.guff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "689317994221-3vr0ovrcuffhpa8aomatonupdcs19h4m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sarin.guff",
+            "certificate_hash": "e880f616259836d77ec1b4d2c9c7e4552428665e"
+          }
+        },
+        {
+          "client_id": "689317994221-trf8a094cebt79f4bb7dqqlk9p3707su.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_JwaJepy2609evyQx5JzYDJ7gHbT_YEs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "689317994221-trf8a094cebt79f4bb7dqqlk9p3707su.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
