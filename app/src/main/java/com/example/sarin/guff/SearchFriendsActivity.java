@@ -240,29 +240,6 @@ public class SearchFriendsActivity extends AppCompatActivity implements SearchVi
     }
 
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item){
-//        super.onOptionsItemSelected(item);
-//
-//        int id = item.getItemId();
-//
-//        if(item.isChecked()) {
-//            item.setChecked(false);
-//        }
-//        else {
-//            item.setChecked(true);
-//        }
-//
-//        if(id == R.id.search_by_name) {
-//            seachedUsername = "name";
-//        }
-//        else if(id == R.id.search_by_id){
-//            seachedUsername = "id";
-//        }
-//        return true;
-//    }
-//
-
     private void usernameFirebaseUserSearch(String search) {
 
         if(seachedUsername == "name") {

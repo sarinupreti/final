@@ -20,3 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -dontwarn com.bumptech.glide.**
+-dontwarn okhttp3.
+-dontwarn okio.

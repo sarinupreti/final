@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.redwan.firebasechatapp", appContext.getPackageName());
+        assertEquals("com.example.sarin.guff", appContext.getPackageName());
     }
 }

@@ -8,10 +8,10 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_camera"
             android:title="Profile" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+        <!--<item-->
+            <!--android:id="@+id/nav_gallery"-->
+            <!--android:icon="@drawable/ic_menu_gallery"-->
+            <!--android:title="Gallery" />-->
         <item
             android:id="@+id/nav_findFriends"
             android:icon="@drawable/emoji_people"
@@ -27,16 +27,16 @@
                 android:icon="@drawable/locked_padlock"
                 android:title="Change Password" />
 
-            <item
-                android:id="@+id/nav_delete"
-                android:icon="@drawable/sym_keyboard_delete_holo_dark"
-                android:title="Delete Account" />
+            <!--<item-->
+                <!--android:id="@+id/nav_delete"-->
+                <!--android:icon="@drawable/sym_keyboard_delete_holo_dark"-->
+                <!--android:title="Delete Account" />-->
 
 
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="Share" />-->
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_menu_send"

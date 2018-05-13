@@ -29,27 +29,6 @@ public class OfflineCapabilities extends Application {
         Picasso.setSingletonInstance(built);
 
 
-
-//        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//        String uId = currentUser.getUid();
-//        userDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
-//
-//        userDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot != null) {
-//
-//                    userDatabase.child("Online").onDisconnect().setValue(false);
-//                    userDatabase.child("Online").setValue(true);
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 
 }

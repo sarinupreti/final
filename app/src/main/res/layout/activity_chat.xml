@@ -94,6 +94,7 @@
             android:layout_width="43dp"
             android:layout_height="41dp"
             android:layout_marginStart="8dp"
+            android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/chat_file_btn"
             emojicon:srcCompat="@android:drawable/ic_menu_mylocation"
             tools:layout_editor_absoluteY="1dp" />

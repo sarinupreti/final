@@ -41,11 +41,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private DatabaseReference user_database, friendList_database, friendRequest_database, notification_database;
     private FirebaseUser currentUser;
-
     private String currentStatus;
-
     private ProgressDialog progressDialog;
-
     private DatabaseReference onlineDatabase;
     private FirebaseUser current;
     LinearLayout linearLayout;
@@ -63,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
         display_name = findViewById(R.id.profileName_view);
         display_status = findViewById(R.id.profileStatus_view);
         sent_cancel_button = findViewById(R.id.sent_cancel);
-        total_frined = findViewById(R.id.totalFriend);
+//        total_frined = findViewById(R.id.totalFriend);
         cancel_request_button = findViewById(R.id.cancel_frnd);
         id = findViewById(R.id.profileId_view);
 
@@ -356,7 +353,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 }
 
-                // ------------------- unfriend the person --------------- //
+                // ------------------- un-friend a user-------------- //
 
                 if(currentStatus.equals("Friend")) {
 

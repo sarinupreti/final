@@ -21,12 +21,13 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:background="@color/colorPrimary"
         android:clickable="true"
-        app:fab_size="normal"
-        android:layout_margin="16dp"
-        app:layout_anchor="@+id/include"
+        android:visibility="invisible"
         app:backgroundTint="@color/colorPrimary"
+        app:fab_size="normal"
+        app:layout_anchor="@+id/include"
         app:layout_anchorGravity="right|bottom"
         app:srcCompat="@drawable/man_user" />
 

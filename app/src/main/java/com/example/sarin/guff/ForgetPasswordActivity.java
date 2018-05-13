@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 public class ForgetPasswordActivity extends AppCompatActivity {
 
@@ -37,12 +39,6 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         backButton = findViewById(R.id.forgetPasswordBackButton);
         email = findViewById(R.id.emailForgetPassword);
         mFirebaseAuth = FirebaseAuth.getInstance();
-
-//        toolbar = findViewById(R.id.toolbar_changePass);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("Forget Password");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         mProgressBar = new ProgressDialog(this);
 
@@ -78,8 +74,19 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
                             }
                             else {
-                                Toast.makeText(ForgetPasswordActivity.this, "Error", Toast.LENGTH_LONG).show();
-                                mProgressBar.dismiss();
+                                String error = "";
+
+                                try {
+                                    throw task.getException();
+                                } catch (FirebaseAuthInvalidUserException e) {
+                                    error = "Invalid Email!";
+                                } catch (Exception e) {
+                                    error = "Default error!";
+                                    e.printStackTrace();
+                                }
+
+                                mProgressBar.hide();
+                                Toast.makeText(ForgetPasswordActivity.this, error, Toast.LENGTH_LONG).show();
                             }
                         }
                     });

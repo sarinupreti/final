@@ -21,4 +21,6 @@
     <string name="phoneNumber">+977-9813011051</string>
     <string name="message_adapter_no_google_maps">This device does not have google maps</string>
     <string name="no_maps">this device has no google maps</string>
+    <string name="minimum_password">The password should be greater than 6 values.</string>
+    <string name="auth_failed">Either email or password is incorrect</string>
 </resources>

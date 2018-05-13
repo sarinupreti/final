@@ -1,7 +1,15 @@
 package com.example.sarin.guff;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -185,9 +193,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 });
 
             } else if (message_type.equals("image")) {
-
                 viewHolder.timeForMeImage.setText(c.getTime());
-
                 Picasso.with(viewHolder.messageImageMe.getContext()).load(c.getMessage()).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.avatar).into(viewHolder.messageImageMe, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -220,7 +226,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 viewHolder.messageTextMe.setTextColor(Color.WHITE);
                 viewHolder.messageTextMe.setText(c.getMessage());
                 viewHolder.timeForMe.setText(c.getTime());
-
+                viewHolder.messageTextMe.setText(stripLinks(c.getMessage()));
                 viewHolder.messageTextMe.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -285,46 +291,35 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 });
 
             } else if (message_type.equals("image")) {
-
                 viewHolder.timeForOthersImage.setText(c.getTime());
-
                 mUserDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
                         final String image = dataSnapshot.child("Thumb_image").getValue().toString();
-
                         Picasso.with(viewHolder.profileImage_pic.getContext()).load(image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.avatar_default).into(viewHolder.profileImage_pic, new Callback() {
                             @Override
                             public void onSuccess() {
-
                             }
-
                             @Override
                             public void onError() {
                                 Picasso.with(viewHolder.profileImage_pic.getContext()).load(image).placeholder(R.drawable.avatar_default).into(viewHolder.profileImage_pic);
                             }
                         });
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
-
                 Picasso.with(viewHolder.messageImage.getContext()).load(c.getMessage()).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.avatar).into(viewHolder.messageImage, new Callback() {
                     @Override
                     public void onSuccess() {
-
                     }
-
                     @Override
                     public void onError() {
                         Picasso.with(viewHolder.messageImage.getContext()).load(c.getMessage()).placeholder(R.drawable.avatar).into(viewHolder.messageImage);
                     }
                 });
-
                 viewHolder.messageImage.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -335,40 +330,33 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                         setSms(sms);
                         return false;
                     }
-
                 });
             }
-
-
             else if(message_type.equals("file")){
+
 
                 viewHolder.messageText.setBackgroundResource(R.drawable.sms_background_others);
                 viewHolder.messageText.setTextColor(Color.BLACK);
                 viewHolder.messageText.setText(c.getMessage());
+                viewHolder.messageText.setMovementMethod(LinkMovementMethod.getInstance());
+                viewHolder.messageText.setText(stripLinks(c.getMessage()));
                 viewHolder.timeForOthers.setText(c.getTime());
-
                 mUserDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
                         final String image = dataSnapshot.child("Thumb_image").getValue().toString();
-
                         Picasso.with(viewHolder.profileImage.getContext()).load(image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.avatar_default).into(viewHolder.profileImage, new Callback() {
                             @Override
                             public void onSuccess() {
-
                             }
-
                             @Override
                             public void onError() {
                                 Picasso.with(viewHolder.profileImage.getContext()).load(image).placeholder(R.drawable.avatar_default).into(viewHolder.profileImage);
                             }
                         });
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
 
@@ -389,6 +377,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         }
     }
 
+
+    private Spannable stripLinks(String content) {
+        Spannable s = new SpannableString(content);
+        URLSpan[] spans = s.getSpans(0, s.length(), URLSpan.class);
+        for (URLSpan span : spans) {
+            s.removeSpan(span);
+        }
+
+        return s;
+    }
     @Override
     public int getItemCount() {
         return mMessageList.size();
@@ -396,14 +394,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
 
-        public TextView messageText, messageTextMe, timeForOthers, timeForMe, timeForOthersImage, timeForMeImage, timeForLocationMe, timeForLocationOthers;
+        public TextView messageText, messageTextMe, timeForOthers, timeForMe, timeForOthersImage, timeForMeImage;
         public CircleImageView profileImage, profileImage_pic;
         public ImageView messageImage, messageImageMe;
-        public MapView locationMe, locationOthers;
         public int COPY = 0;
         public int VIEW = 1;
         public int DELETE= 2;
-        public int OPENURL =3;
+        public int OPENURL=3;
 
 
         public MessageViewHolder(View view) {
@@ -419,15 +416,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             messageImage = view.findViewById(R.id.message_Image_layout);
             messageImageMe = view.findViewById(R.id.message_Image_layout_Me);
             profileImage_pic = view.findViewById(R.id.message_profile_layout_pic);
-
-
+            view.setOnCreateContextMenuListener(this);
         }
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.add(0, COPY, 0, "Copy Text");
-            menu.add(0, VIEW, 0, "Image View");
-            menu.add(0, DELETE, 0, "Delete Text");
-            menu.add(0,OPENURL,0, "Open URL");
+
+
+                menu.add(0, COPY, 0, "Copy  Message");
+                menu.add(0, VIEW, 0, "Image View");
+                menu.add(0, DELETE, 0, "Delete Message");
+                menu.add(0, OPENURL, 0, "Open Link");
+
         }
     }
 }
+

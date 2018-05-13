@@ -1,5 +1,6 @@
 package com.example.sarin.guff;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -17,8 +18,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -26,6 +30,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -182,9 +187,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (final DataSnapshot data : dataSnapshot.getChildren()) {
-
                     final int position = Integer.parseInt(data.child("position").getValue().toString());
-
                     if (data.child("isDelete").getValue().toString().equals("true") && position != -1 ) {
 
                         String current_user_ref = "messages/" + mCurrentUserId + "/" + mChatUser + "/" + data.getKey().toString();
@@ -280,16 +283,11 @@ public class ChatActivity extends AppCompatActivity {
                     mRootRef.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-
                             if (databaseError != null) {
-
                                 Log.d("CHAT_LOG", databaseError.getMessage().toString());
-
                             }
-
                         }
                     });
-
                     chatAddMap = new HashMap();
                     chatAddMap.put("seen", true);
                     chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
@@ -337,12 +335,9 @@ public class ChatActivity extends AppCompatActivity {
         mChatAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(ChatActivity.this);
-
             }
         });
 
@@ -350,13 +345,9 @@ public class ChatActivity extends AppCompatActivity {
         mChatFileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 openFileSelector();
-
             }
         });
-
-
         mChatLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -426,33 +417,28 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         else if(item.getItemId() == 1) {
-
             if(smsType.equals("image")) {
-
                 Intent intent = new Intent(this, FullScreenImageView.class);
                 intent.setType(message);
                 startActivity(intent);
             }
         }
         else if(item.getItemId() == 2) {
-            //delete message
-
             if(fromUser.equals(mCurrentUserId)){
                 deleteMessage(message, message_id, position);
+
             } else {
                 Toast.makeText(ChatActivity.this, "Cannot delete others message", Toast.LENGTH_SHORT).show();
 
             }
         }else if (item.getItemId() ==3 ){
+            if(!smsType.equals("text")) {
+                Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(message));
+                startActivity(intent);
+            }else {
+                Toast.makeText(this, "You cannot open a text . Its Encrypted", Toast.LENGTH_SHORT).show();
+            }
 
-            final int finalPosition = position;
-            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-
-                    return false;
-                }
-            });
         }
         return super.onContextItemSelected(item);
     }
@@ -567,7 +553,7 @@ public class ChatActivity extends AppCompatActivity {
                     });
 
 
-            ////////////////////////////sending file test ////////////////////////////////////////////////////
+            ////////////////////////////sending file  ////////////////////////////////////////////////////
 
             final String current_user_ref = "messages/" + mCurrentUserId + "/" + mChatUser;
             final String chat_user_ref = "messages/" + mChatUser + "/" + mCurrentUserId;
@@ -587,7 +573,9 @@ public class ChatActivity extends AppCompatActivity {
                         final String download_url = task.getResult().getDownloadUrl().toString();
 
 
-                        if(!TextUtils.isEmpty(download_url)){
+
+
+                         if(!TextUtils.isEmpty(download_url)){
 
                             String date = DateFormat.getDateTimeInstance().format(new Date());
                             final String time = DateFormat.getTimeInstance().format(new Date());
@@ -616,7 +604,6 @@ public class ChatActivity extends AppCompatActivity {
                             messageUserMap.put(chat_user_ref + "/" + push_id, messageMap);
 
                             emojiconEditText.setText("");
-
                             mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
                             mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("timestamp").setValue(ServerValue.TIMESTAMP);
 
@@ -627,16 +614,6 @@ public class ChatActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
-                                    boolean isContain = containsURL(download_url);
-                                    Log.d("Result", String.valueOf(isContain));
-                                    Toast.makeText(ChatActivity.this, String.valueOf(isContain), Toast.LENGTH_SHORT).show();
-
-                                    if (String.valueOf(isContain).equals(true)){
-
-
-                                        myTextView.setText((CharacterIterator) Html.fromHtml(download_url));
-
-                                    }
 
                                 }
                             });
@@ -719,6 +696,7 @@ public class ChatActivity extends AppCompatActivity {
                                         messageUserMap.put(chat_user_ref + "/" + push_id, messageMap);
 
                                         emojiconEditText.setText("");
+
 
                                         mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
                                         mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("timestamp").setValue(ServerValue.TIMESTAMP);
@@ -813,6 +791,15 @@ public class ChatActivity extends AppCompatActivity {
         return false;
     }
 
+    private Spannable stripLinks(String content) {
+        Spannable s = new SpannableString(content);
+        URLSpan[] spans = s.getSpans(0, s.length(), URLSpan.class);
+        for (URLSpan span : spans) {
+            s.removeSpan(span);
+        }
+
+        return s;
+    }
 
     private void sendMessage() {
 
@@ -846,9 +833,7 @@ public class ChatActivity extends AppCompatActivity {
             Map messageUserMap = new HashMap();
             messageUserMap.put(current_user_ref + "/" + push_id, messageMap);
             messageUserMap.put(chat_user_ref + "/" + push_id, messageMap);
-
             emojiconEditText.setText("");
-
             mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
             mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("timestamp").setValue(ServerValue.TIMESTAMP);
 
@@ -860,9 +845,7 @@ public class ChatActivity extends AppCompatActivity {
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
                     if(databaseError != null){
-
                         Log.d("CHAT_LOG", databaseError.getMessage().toString());
-
                     }
 
                 }

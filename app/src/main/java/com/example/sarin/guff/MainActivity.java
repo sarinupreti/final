@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
             // online -------------------------
 
+            Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
+            startActivity(intent);
+            finish();
+
             current = FirebaseAuth.getInstance().getCurrentUser();
             onlineDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(current.getUid()).child("Online");
             onlineDatabase.setValue("true");
@@ -106,12 +110,6 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.accountSetting){
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         }
-//        else if(item.getItemId() == R.id.changePass){
-//            startActivity(new Intent(MainActivity.this, ChangePasswordActivity.class));
-//        }
-//        else if(item.getItemId() == R.id.delete_account){
-//            startActivity(new Intent(MainActivity.this, DeleteAccountActivity.class));
-//        }zz
         else if(item.getItemId() == R.id.logout){
             onlineDatabase.setValue(ServerValue.TIMESTAMP);
             FirebaseAuth.getInstance().signOut();

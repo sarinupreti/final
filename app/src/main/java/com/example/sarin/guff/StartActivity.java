@@ -11,23 +11,19 @@ import android.widget.TextView;
 
 public class StartActivity extends AppCompatActivity {
 
-    private Button have, not;
-    private TextView forgetPassword;
-
-    LinearLayout linearLayout;
-    AnimationDrawable animationDrawable;
+    private Button login, registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        have = findViewById(R.id.have);
-        not = findViewById(R.id.not);
+        login = findViewById(R.id.loginbutton);
+        registerButton = findViewById(R.id.newAccountButton);
 
 
 
-        have.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent login = new Intent(StartActivity.this, LoginActivity.class);
@@ -35,11 +31,11 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        not.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent reges = new Intent(StartActivity.this, RegisterActivity.class);
-                startActivity(reges);
+                Intent registration = new Intent(StartActivity.this, RegisterActivity.class);
+                startActivity(registration);
             }
         });
 

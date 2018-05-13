@@ -10,16 +10,18 @@
 
     <com.flaviofaria.kenburnsview.KenBurnsView
         android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="633dp"
-        android:src="@drawable/rara"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/boats"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.88"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.554" />
 
     <Button
-        android:id="@+id/have"
+        android:id="@+id/loginbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="232dp"
@@ -35,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/not"
+        android:id="@+id/newAccountButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -50,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/have"
+        app:layout_constraintTop_toBottomOf="@+id/loginbutton"
         app:layout_constraintVertical_bias="0.0" />
 
 

@@ -10,13 +10,14 @@
 
     <com.flaviofaria.kenburnsview.KenBurnsView
         android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="633dp"
-        android:src="@drawable/boudhanight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/buddha"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -86,7 +87,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout"
+            android:id="@+id/emailTextInput"
             style="@style/MyEditTextStyle"
             android:layout_width="285dp"
             android:layout_height="wrap_content"
@@ -121,7 +122,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout1"
+            android:id="@+id/passwordtextInputLayout"
             style="@style/MyEditTextStyle"
             android:layout_width="285dp"
             android:layout_height="0dp"
@@ -173,9 +174,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout1"
+            app:layout_constraintTop_toBottomOf="@+id/passwordtextInputLayout"
             tools:layout_conversion_absoluteHeight="40dp"
             tools:layout_conversion_absoluteWidth="90dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordtextInputLayout"
+            app:layout_constraintVertical_bias="0.521" />
 
     </android.support.constraint.ConstraintLayout>
 

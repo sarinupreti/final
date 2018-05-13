@@ -27,6 +27,7 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+import com.stfalcon.frescoimageviewer.ImageViewer;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -60,16 +61,16 @@ public class NavigationActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent searchFriendIntent = new Intent(NavigationActivity.this, SearchFriendsActivity.class);
-                startActivity(searchFriendIntent);
-
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Intent searchFriendIntent = new Intent(NavigationActivity.this, SearchFriendsActivity.class);
+//                startActivity(searchFriendIntent);
+//
+//            }
+//        });
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -138,11 +139,6 @@ public class NavigationActivity extends AppCompatActivity
 
             }
         });
-
-
-
-
-
     }
 
     @Override
@@ -164,9 +160,6 @@ public class NavigationActivity extends AppCompatActivity
     }
 
 
-
-
-
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -178,14 +171,12 @@ public class NavigationActivity extends AppCompatActivity
         else if(item.getItemId() == R.id.nav_changePassword){
             startActivity(new Intent(NavigationActivity.this, ChangePasswordActivity.class));
         }
-        else if(item.getItemId() == R.id.nav_delete){
-            startActivity(new Intent(NavigationActivity.this, DeleteAccountActivity.class));
-        }
+//        else if(item.getItemId() == R.id.nav_delete){
+//            startActivity(new Intent(NavigationActivity.this, DeleteAccountActivity.class));
+//        }
         else if(item.getItemId() == R.id.nav_logout){
 
-
-
-            if ((onlineDatabase != (null)))
+           if ((onlineDatabase != (null)))
 
             {
                 onlineDatabase.setValue(ServerValue.TIMESTAMP);
@@ -203,8 +194,6 @@ public class NavigationActivity extends AppCompatActivity
         else if(item.getItemId() == R.id.nav_findFriends){
             startActivity(new Intent(NavigationActivity.this, AllUsersActivity.class));
         }
-
-
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

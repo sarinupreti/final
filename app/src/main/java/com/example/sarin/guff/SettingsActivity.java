@@ -1,10 +1,8 @@
 package com.example.sarin.guff;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,16 +44,19 @@ public class SettingsActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
     private TextView display;
     private TextView c_status, id;
-
+    //    private CircleImageView proPic;
     private ImageView proPic;
-
+    private ImageView coverPic, coverPicButton;
     private Button changeStatus, changePic;
     private static final int GALLERY_PIC = 1;
     private StorageReference mStorage;
     private ProgressDialog mProgressBar;
+//   private String pressed = "";
 
     private DatabaseReference onlineDatabase;
     private FirebaseUser current;
+    LinearLayout linearLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
         mFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String uId = mFireBaseUser.getUid();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
-
+        mDatabaseReference.keepSynced(true);
         mStorage = FirebaseStorage.getInstance().getReference();
 
         mProgressBar = new ProgressDialog(this);
@@ -79,6 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         current = FirebaseAuth.getInstance().getCurrentUser();
         onlineDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(current.getUid()).child("Online");
+        onlineDatabase.keepSynced(true);
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -95,7 +97,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 if(!thumbImage.equals("default")) {
                     Picasso.with(SettingsActivity.this).load(thumbImage).placeholder(R.drawable.avatar_default).into(proPic);
-                    }
+                }
 
                 proPic.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -128,6 +130,7 @@ public class SettingsActivity extends AppCompatActivity {
                 gallery.setType("image/*");
                 gallery.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(gallery, "SELECT IMAGE"), GALLERY_PIC);
+
 
             }
         });
@@ -166,7 +169,7 @@ public class SettingsActivity extends AppCompatActivity {
                         .setQuality(1000)
                         .compressToBitmap(thumb_filePath);
 
-                //for uploading thumb image to database
+
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -192,7 +195,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                                     if(thumb_task.isSuccessful()) {
 
-                                        Map updateHashMap = new HashMap();      //    Map <String, String> likhle hobe na.
+                                        Map updateHashMap = new HashMap();
                                         updateHashMap.put("Image", download_url);
                                         updateHashMap.put("Thumb_image", download_thumb_url);
 
@@ -241,5 +244,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onPause();
         onlineDatabase.setValue(ServerValue.TIMESTAMP);
     }
+
 
 }

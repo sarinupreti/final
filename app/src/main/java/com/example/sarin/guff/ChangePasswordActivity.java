@@ -1,5 +1,6 @@
 package com.example.sarin.guff;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,7 +22,7 @@ import com.google.firebase.database.ServerValue;
 public class ChangePasswordActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private EditText change_password;
+    private EditText newPassword;
     private Button change_password_button;
     private FirebaseUser firebaseUser;
     private ProgressDialog progressDialog;
@@ -33,7 +34,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         setContentView(R.layout.activity_change_password);
 
         toolbar = findViewById(R.id.toolbar_changePass);
@@ -41,9 +42,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Change Password");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        change_password = findViewById(R.id.pass_editText);
+        newPassword = findViewById(R.id.pass_editText);
         change_password_button = findViewById(R.id.CPass_Button);
         progressDialog = new ProgressDialog(this);
+
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -52,31 +54,35 @@ public class ChangePasswordActivity extends AppCompatActivity {
         onlineDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(current.getUid()).child("Online");
         onlineDatabase.keepSynced(true);
 
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         change_password_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newPass = change_password.getText().toString();
-                if(newPass.length() < 6){
-                    Toast.makeText(ChangePasswordActivity.this, "Password should be At least 6 characters", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    progressDialog.setMessage("changing your password...");
-                    progressDialog.show();
-                    firebaseUser.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                progressDialog.dismiss();
-//                              FirebaseAuth.getInstance().signOut();
-                                Toast.makeText(ChangePasswordActivity.this, "Password has been changed", Toast.LENGTH_LONG).show();
-                                finish();
-                            }
-                            else {
-                                progressDialog.dismiss();
-                                Toast.makeText(ChangePasswordActivity.this, "something is wrong", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                progressDialog.show();
+                if (user != null && !newPassword.getText().toString().trim().equals("")) {
+                    if (newPassword.getText().toString().trim().length() < 6) {
+                        newPassword.setError("Password too short, enter minimum 6 characters");
+                        progressDialog.hide();
+                    } else {
+                        user.updatePassword(newPassword.getText().toString().trim())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(ChangePasswordActivity.this, "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
+                                            signOut();
+                                            progressDialog.cancel();
+                                        } else {
+                                            Toast.makeText(ChangePasswordActivity.this, "Failed to update password!", Toast.LENGTH_SHORT).show();
+                                            progressDialog.cancel();
+                                        }
+                                    }
+                                });
+                    }
+                } else if (newPassword.getText().toString().trim().equals("")) {
+                    newPassword.setError("Enter password");
+                    progressDialog.cancel();
                 }
             }
         });
@@ -93,4 +99,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onPause();
         onlineDatabase.setValue(ServerValue.TIMESTAMP);
     }
-}
+
+
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+    }
+    }

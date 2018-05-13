@@ -21,13 +21,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:background="@android:color/white"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
         android:maxWidth="240dp"
         android:padding="8dp"
         android:text="TextView"
+        android:autoLink="web"
         android:textColor="@color/colorPrimary"
         android:textIsSelectable="true"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/message_profile_layout"
         app:layout_constraintTop_toTopOf="parent" />
 
